@@ -270,7 +270,7 @@ install_webrtc(){
   ./src/tools-woogeen/install.sh
   ./src/tools-woogeen/build.sh
   popd
-  install_webrtc79
+  # install_webrtc79
 }
 
 install_licode(){
