@@ -57,7 +57,7 @@ install_ffmpeg(){
 
   mkdir -p ${LIB_DIR}
   pushd ${LIB_DIR}
-  [[ ! -s ${SRC} ]] && wget -c ${SRC_URL}
+  cp -r $LIB_DEPS_REPO/${SRC} .
   if ! (echo "${SRC_MD5SUM} ${SRC}" | md5sum --check) ; then
       echo "Downloaded file ${SRC} is corrupted."
       rm -v ${SRC}
@@ -84,7 +84,7 @@ install_zlib() {
     pushd $LIB_DIR >/dev/null
     rm -rf zlib-*
     rm -f ./build/lib/zlib.*
-    wget -c https://zlib.net/zlib-${VERSION}.tar.gz
+    cp -r $LIB_DEPS_REPO/zlib-${VERSION}.tar.gz .
     tar -zxf zlib-${VERSION}.tar.gz
     pushd zlib-${VERSION} >/dev/null
     ./configure --prefix=$PREFIX_DIR
@@ -106,7 +106,7 @@ install_libnice0114(){
     cd $LIB_DIR
     rm -f ./build/lib/libnice.*
     rm -rf libnice-0.1.*
-    wget -c http://nice.freedesktop.org/releases/libnice-0.1.14.tar.gz
+    cp -r $LIB_DEPS_REPO/libnice-0.1.14.tar.gz .
     tar -zxvf libnice-0.1.14.tar.gz
     cd libnice-0.1.14
     #patch -p1 < $PATHNAME/patches/libnice-0114.patch
@@ -128,7 +128,7 @@ install_libnice014(){
     cd $LIB_DIR
     rm -f ./build/lib/libnice.*
     rm -rf libnice-0.1.*
-    wget -c http://nice.freedesktop.org/releases/libnice-0.1.4.tar.gz
+    cp -r $LIB_DEPS_REPO/libnice-0.1.4.tar.gz .
     tar -zxvf libnice-0.1.4.tar.gz
     cd libnice-0.1.4
     patch -p1 < $PATHNAME/patches/libnice014-agentlock.patch
@@ -156,8 +156,7 @@ install_openssl(){
     rm -f ./build/lib/libssl.*
     rm -f ./build/lib/libcrypto.*
     rm -rf openssl-1*
-
-    wget -c https://www.openssl.org/source/openssl-${SSL_VERSION}.tar.gz
+    cp -r $LIB_DEPS_REPO/openssl-${SSL_VERSION}.tar.gz .
     tar xf openssl-${SSL_VERSION}.tar.gz
     cd openssl-${SSL_VERSION}
     ./config no-ssl3 --prefix=$PREFIX_DIR -fPIC
@@ -223,7 +222,7 @@ install_libexpat() {
     pushd ${LIB_DIR} >/dev/null
     rm -rf expat-*
     rm -f ./build/lib/libexpat.*
-    wget -c $DURL
+    cp -r $LIB_DEPS_REPO/expat-${VERSION}.tar.bz2 .
     tar jxf expat-${VERSION}.tar.bz2
     pushd expat-${VERSION} >/dev/null
     ./configure --prefix=${PREFIX_DIR} --with-docbook --without-xmlwf
@@ -267,11 +266,10 @@ install_webrtc(){
   mkdir $ROOT/third_party/webrtc
 
   pushd ${ROOT}/third_party/webrtc
-  git clone -b 59-server https://github.com/open-webrtc-toolkit/owt-deps-webrtc.git src
+  git clone -b 59-server https://github.com/frameenjoy/owt-deps-webrtc.git src
   ./src/tools-woogeen/install.sh
   ./src/tools-woogeen/build.sh
   popd
-
   install_webrtc79
 }
 
@@ -328,7 +326,7 @@ install_libsrtp2(){
   if [ -d $LIB_DIR ]; then
     cd $LIB_DIR
     rm -rf libsrtp-2.1.0
-    curl -o libsrtp-2.1.0.tar.gz https://codeload.github.com/cisco/libsrtp/tar.gz/v2.1.0
+    cp -r $LIB_DEPS_REPO/libsrtp-2.1.0.tar.gz .
     tar -zxvf libsrtp-2.1.0.tar.gz
     cd libsrtp-2.1.0
     CFLAGS="-fPIC" ./configure --enable-openssl --prefix=$PREFIX_DIR --with-openssl-dir=$PREFIX_DIR
