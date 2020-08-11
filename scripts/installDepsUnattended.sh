@@ -5,7 +5,7 @@ PATHNAME=`dirname $SCRIPT`
 ROOT=$PATHNAME/..
 BUILD_DIR=$ROOT/build
 CURRENT_DIR=`pwd`
-
+LIB_DEPS_REPO=$ROOT/third_party/deps
 LIB_DIR=$BUILD_DIR/libdeps
 PREFIX_DIR=$LIB_DIR/build/
 DISABLE_NONFREE=true
